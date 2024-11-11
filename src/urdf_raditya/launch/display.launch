@@ -16,5 +16,5 @@
     name="rviz"
     pkg="rviz"
     type="rviz"
-    args="-d $(find urdf_raditya)/urdf.rviz" />
+    args="-d $(find urdf_raditya)/config/urdf.rviz" />
 </launch>

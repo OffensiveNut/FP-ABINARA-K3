@@ -1,0 +1,4 @@
+# Ignore ROS build and devel directories
+/build/
+/devel/
+/.vscode/
