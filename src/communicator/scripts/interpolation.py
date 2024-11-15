@@ -7,7 +7,7 @@ def interpolate(x):
     b = 90
     # Value range [c, d]
     c = 1000
-    d = 2000
+    d = 5000
     # Persamaan interpolasi linear dari range
     y = ((x - a) * (d - c) / (b - a)) + c
     # Kembalikan nilai sebagai integer
