@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import rospy
 from std_msgs.msg import Int32MultiArray
-from interpolation import interpolate
+from interpolation import interpolatesg, interpolatemg
 import serial
 import threading
 
@@ -43,7 +43,7 @@ def callback(data):
     angles = data.data  # data.data will contain the list of angles
 
     # Convert angles to digital units using interpolation
-    digital_units = [interpolate(angle) for angle in angles]  # Use the interpolate function
+    digital_units = [interpolatesg(angle) for angle in angles]  # Use the interpolate function
 
     # Display the angles and their corresponding digital values
     rospy.loginfo(f'Sudut: {angles}')

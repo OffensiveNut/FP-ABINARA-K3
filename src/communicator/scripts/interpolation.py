@@ -1,4 +1,4 @@
-def interpolate(x):
+def interpolatesg(x):
     # Pastikan sudut berada di dalam range
     if x < -90.0: x = -90.0
     elif x > 90.0: x = 90.0
@@ -13,6 +13,20 @@ def interpolate(x):
     # Kembalikan nilai sebagai integer
     return int(y)
 
+def interpolatemg(x):
+        # Pastikan sudut berada di dalam range
+    if x < -60.0: x = -60.0
+    elif x > 60.0: x = 60.0
+    # Angle range [a, b]
+    a = -60
+    b = 60
+    # Value range [c, d]
+    c = 1000
+    d = 5000
+    # Persamaan interpolasi linear dari range
+    y = ((x - a) * (d - c) / (b - a)) + c
+    # Kembalikan nilai sebagai integer
+    return int(y)
 # def main():
 #     # # Sudut dalam derajat
 #     # angles = [100.0, -90.0, 73.34]
