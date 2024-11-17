@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="URDFFPRADITYA">
+  <link
+    name="base">
+    <inertial>
+      <origin
+        xyz="0.00417258922803089 -7.63163683942039E-05 0.0827113985563339"
+        rpy="0 0 0" />
+      <mass
+        value="0.272903163990243" />
+      <inertia
+        ixx="0.000429962052550315"
+        ixy="-2.64315576764265E-07"
+        ixz="9.95683828945404E-06"
+        iyy="0.000444641998165347"
+        iyz="-1.84433530783371E-07"
+        izz="0.000690137740180865" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://URDFFPRADITYA/meshes/base.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://URDFFPRADITYA/meshes/base.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="piringan">
+    <inertial>
+      <origin
+        xyz="0.000466159484448322 -0.0184644151564884 0.0304858000552142"
+        rpy="0 0 0" />
+      <mass
+        value="0.0882364212328449" />
+      <inertia
+        ixx="5.52122500227001E-05"
+        ixy="1.75775010679822E-07"
+        ixz="-2.18372832027494E-07"
+        iyy="6.33014176321945E-05"
+        iyz="8.67690046138616E-06"
+        izz="4.46103343876022E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://URDFFPRADITYA/meshes/piringan.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://URDFFPRADITYA/meshes/piringan.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="piringan"
+    type="revolute">
+    <origin
+      xyz="0.0025666 0 0.12245"
+      rpy="0 0 0" />
+    <parent
+      link="base" />
+    <child
+      link="piringan" />
+    <axis
+      xyz="-0.020956 0 -0.99978" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="0.83357"
+      velocity="5.236" />
+  </joint>
+  <link
+    name="servolink1">
+    <inertial>
+      <origin
+        xyz="0.0577758157987515 0.00125801950225127 -0.044721879320529"
+        rpy="0 0 0" />
+      <mass
+        value="0.128960070338363" />
+      <inertia
+        ixx="4.51624109465899E-05"
+        ixy="-1.04960806426866E-05"
+        ixz="7.86328350347157E-07"
+        iyy="0.000199243759542007"
+        iyz="9.68344484703568E-07"
+        izz="0.000232414347477837" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://URDFFPRADITYA/meshes/servolink1.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://URDFFPRADITYA/meshes/servolink1.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="sevo1"
+    type="revolute">
+    <origin
+      xyz="0.00174117631642771 0.0511058158857173 0.051907724005499"
+      rpy="-1.5707963267949 0 0" />
+    <parent
+      link="piringan" />
+    <child
+      link="servolink1" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="0.83357"
+      velocity="5.236" />
+  </joint>
+  <link
+    name="servolink2">
+    <inertial>
+      <origin
+        xyz="0.0464841100096158 0.00174948739431702 -0.0761896914678902"
+        rpy="0 0 0" />
+      <mass
+        value="0.125855455865507" />
+      <inertia
+        ixx="3.02721620296553E-05"
+        ixy="-2.40277642941761E-06"
+        ixz="-1.26286230330879E-12"
+        iyy="9.45110824907241E-05"
+        iyz="-3.32610776487244E-13"
+        izz="0.000102469633938426" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://URDFFPRADITYA/meshes/servolink2.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://URDFFPRADITYA/meshes/servolink2.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="servo2"
+    type="revolute">
+    <origin
+      xyz="0.114034064649251 0.00706014836438754 -0.00176338721238546"
+      rpy="0 0 0" />
+    <parent
+      link="servolink1" />
+    <child
+      link="servolink2" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="0.83357"
+      velocity="5.236" />
+  </joint>
+  <link
+    name="servolink3">
+    <inertial>
+      <origin
+        xyz="0.0620234389184806 -0.0040790777727007 -0.0593197402450246"
+        rpy="0 0 0" />
+      <mass
+        value="0.0260593092533437" />
+      <inertia
+        ixx="9.09683554066077E-06"
+        ixy="-2.36209174396408E-07"
+        ixz="-2.93645570138929E-08"
+        iyy="1.53439259310092E-05"
+        iyz="-1.46574704092211E-07"
+        izz="1.61650308361707E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://URDFFPRADITYA/meshes/servolink3.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://URDFFPRADITYA/meshes/servolink3.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="servo3"
+    type="revolute">
+    <origin
+      xyz="0.0945742243913521 0.00353263784834318 -0.00146171444441153"
+      rpy="0 0 0" />
+    <parent
+      link="servolink2" />
+    <child
+      link="servolink3" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="0.83357"
+      velocity="5.236" />
+  </joint>
+  <link
+    name="servo4">
+    <inertial>
+      <origin
+        xyz="0.0255618399435673 0.00823998018558937 -0.151178771594833"
+        rpy="0 0 0" />
+      <mass
+        value="0.00593660537539606" />
+      <inertia
+        ixx="7.5418129421024E-07"
+        ixy="-8.73168501496348E-07"
+        ixz="-9.85265988499928E-08"
+        iyy="4.45465648871607E-06"
+        iyz="-3.61806661580129E-08"
+        izz="5.18037390894127E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://URDFFPRADITYA/meshes/servo4.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.776470588235294 0.756862745098039 0.737254901960784 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://URDFFPRADITYA/meshes/servo4.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="servo4"
+    type="revolute">
+    <origin
+      xyz="0.0831288027064685 0.169972417305128 -0.0733785107611967"
+      rpy="-1.5707963267949 0 0" />
+    <parent
+      link="servolink3" />
+    <child
+      link="servo4" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="0.17652"
+      velocity="10.472" />
+  </joint>
+  <link
+    name="endpoint1">
+    <inertial>
+      <origin
+        xyz="-0.31034154618055 -0.00126947176024928 0.0182038090132978"
+        rpy="0 0 0" />
+      <mass
+        value="0.657387493547971" />
+      <inertia
+        ixx="0.00181876145870602"
+        ixy="-0.000329203114779509"
+        ixz="0.00133612629704726"
+        iyy="0.00683074207308541"
+        iyz="0.000143324613122407"
+        izz="0.0059950654188618" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://URDFFPRADITYA/meshes/endpoint1.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://URDFFPRADITYA/meshes/endpoint1.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="endpoint1"
+    type="fixed">
+    <origin
+      xyz="0.07851 -0.017246 -0.15499"
+      rpy="0 0 0" />
+    <parent
+      link="servo4" />
+    <child
+      link="endpoint1" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="servotipu">
+    <inertial>
+      <origin
+        xyz="0.0200681062053951 -0.00760663414439727 -0.152610373161557"
+        rpy="0 0 0" />
+      <mass
+        value="0.00943642630992543" />
+      <inertia
+        ixx="1.53010007604928E-06"
+        ixy="1.70333197296685E-06"
+        ixz="1.4818010321321E-07"
+        iyy="6.13769701471646E-06"
+        iyz="-6.65171192606925E-08"
+        izz="7.61772673692282E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://URDFFPRADITYA/meshes/servotipu.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.776470588235294 0.756862745098039 0.737254901960784 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://URDFFPRADITYA/meshes/servotipu.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="servotipu"
+    type="revolute">
+    <origin
+      xyz="0.083029 0.16997 -0.043379"
+      rpy="-1.5708 0 0" />
+    <parent
+      link="servolink3" />
+    <child
+      link="servotipu" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="0.17652"
+      velocity="10.472" />
+  </joint>
+  <link
+    name="endpoint2">
+    <inertial>
+      <origin
+        xyz="-0.308019406044982 -0.00133156473112015 0.0182038090132977"
+        rpy="0 0 0" />
+      <mass
+        value="0.657387493547972" />
+      <inertia
+        ixx="0.00181876145870601"
+        ixy="-0.000329203114779437"
+        ixz="0.00133612629704726"
+        iyy="0.00683074207308542"
+        iyz="0.000143324613122388"
+        izz="0.0059950654188618" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://URDFFPRADITYA/meshes/endpoint2.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://URDFFPRADITYA/meshes/endpoint2.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="endpoint2"
+    type="fixed">
+    <origin
+      xyz="0.0762870841043169 0.0128156153922516 -0.154987060760109"
+      rpy="0 0 0" />
+    <parent
+      link="servotipu" />
+    <child
+      link="endpoint2" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+</robot>
