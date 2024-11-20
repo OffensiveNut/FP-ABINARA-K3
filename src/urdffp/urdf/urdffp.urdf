@@ -3,22 +3,22 @@
      Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
      For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
 <robot
-  name="URDFFPRADITYA">
+  name="urdffp">
   <link
     name="base">
     <inertial>
       <origin
-        xyz="0.00417258922803089 -7.63163683942039E-05 0.0827113985563339"
+        xyz="0.00250555328330903 -3.81462588426087E-05 0.0316963277414826"
         rpy="0 0 0" />
       <mass
-        value="0.272903163990243" />
+        value="0.272903164017977" />
       <inertia
-        ixx="0.000429962052550315"
-        ixy="-2.64315576764265E-07"
-        ixz="9.95683828945404E-06"
-        iyy="0.000444641998165347"
-        iyz="-1.84433530783371E-07"
-        izz="0.000690137740180865" />
+        ixx="0.000429690662720169"
+        ixy="-4.91905405591446E-07"
+        ixz="5.0446404090374E-06"
+        iyy="0.000444630381267082"
+        iyz="-1.1942225610325E-07"
+        izz="0.000690420746922854" />
     </inertial>
     <visual>
       <origin
@@ -26,7 +26,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://URDFFPRADITYA/meshes/base.STL" />
+          filename="package://urdffp/meshes/base.STL" />
       </geometry>
       <material
         name="">
@@ -40,7 +40,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://URDFFPRADITYA/meshes/base.STL" />
+          filename="package://urdffp/meshes/base.STL" />
       </geometry>
     </collision>
   </link>
@@ -48,17 +48,17 @@
     name="piringan">
     <inertial>
       <origin
-        xyz="0.000466159484448322 -0.0184644151564884 0.0304858000552142"
+        xyz="7.1158142641946E-05 -0.0184666186242548 0.0329887975542059"
         rpy="0 0 0" />
       <mass
-        value="0.0882364212328449" />
+        value="0.0882364212464755" />
       <inertia
-        ixx="5.52122500227001E-05"
-        ixy="1.75775010679822E-07"
-        ixz="-2.18372832027494E-07"
-        iyy="6.33014176321945E-05"
-        iyz="8.67690046138616E-06"
-        izz="4.46103343876022E-05" />
+        ixx="5.52167146898469E-05"
+        ixy="1.20492494645693E-08"
+        ixz="-1.82420450568254E-08"
+        iyy="6.33014176342086E-05"
+        iyz="8.67867232448484E-06"
+        izz="4.46058697242766E-05" />
     </inertial>
     <visual>
       <origin
@@ -66,7 +66,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://URDFFPRADITYA/meshes/piringan.STL" />
+          filename="package://urdffp/meshes/piringan.STL" />
       </geometry>
       <material
         name="">
@@ -80,22 +80,22 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://URDFFPRADITYA/meshes/piringan.STL" />
+          filename="package://urdffp/meshes/piringan.STL" />
       </geometry>
     </collision>
   </link>
   <joint
-    name="piringan"
+    name="servopiringan"
     type="revolute">
     <origin
-      xyz="0.0025666 0 0.12245"
+      xyz="-3.0958E-05 0 0.0689"
       rpy="0 0 0" />
     <parent
       link="base" />
     <child
       link="piringan" />
     <axis
-      xyz="-0.020956 0 -0.99978" />
+      xyz="-0.0020906 0 -1" />
     <limit
       lower="-3.14"
       upper="3.14"
@@ -103,20 +103,20 @@
       velocity="5.236" />
   </joint>
   <link
-    name="servolink1">
+    name="link1">
     <inertial>
       <origin
-        xyz="0.0577758157987515 0.00125801950225127 -0.044721879320529"
+        xyz="0.0558755183846822 0.00100866111594956 0.00296163275902246"
         rpy="0 0 0" />
       <mass
-        value="0.128960070338363" />
+        value="0.0802065215999488" />
       <inertia
-        ixx="4.51624109465899E-05"
-        ixy="-1.04960806426866E-05"
-        ixz="7.86328350347157E-07"
-        iyy="0.000199243759542007"
-        iyz="9.68344484703568E-07"
-        izz="0.000232414347477837" />
+        ixx="1.8336321239439E-05"
+        ixy="-4.26590175619785E-07"
+        ixz="-2.49033577033556E-07"
+        iyy="0.000160165932423911"
+        iyz="1.00241541645658E-07"
+        izz="0.000174697138177849" />
     </inertial>
     <visual>
       <origin
@@ -124,7 +124,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://URDFFPRADITYA/meshes/servolink1.STL" />
+          filename="package://urdffp/meshes/link1.STL" />
       </geometry>
       <material
         name="">
@@ -138,22 +138,22 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://URDFFPRADITYA/meshes/servolink1.STL" />
+          filename="package://urdffp/meshes/link1.STL" />
       </geometry>
     </collision>
   </link>
   <joint
-    name="sevo1"
+    name="servolink1"
     type="revolute">
     <origin
-      xyz="0.00174117631642771 0.0511058158857173 0.051907724005499"
-      rpy="-1.5707963267949 0 0" />
+      xyz="0.0001138 0 0.054433"
+      rpy="-1.5708 0 0" />
     <parent
       link="piringan" />
     <child
-      link="servolink1" />
+      link="link1" />
     <axis
-      xyz="0 0 1" />
+      xyz="0 0 -1" />
     <limit
       lower="-3.14"
       upper="3.14"
@@ -161,20 +161,20 @@
       velocity="5.236" />
   </joint>
   <link
-    name="servolink2">
+    name="link2">
     <inertial>
       <origin
-        xyz="0.0464841100096158 0.00174948739431702 -0.0761896914678902"
+        xyz="0.0473240197953751 0.000304211858951464 -0.0268494662534417"
         rpy="0 0 0" />
       <mass
-        value="0.125855455865507" />
+        value="0.12585545698654" />
       <inertia
-        ixx="3.02721620296553E-05"
-        ixy="-2.40277642941761E-06"
-        ixz="-1.26286230330879E-12"
-        iyy="9.45110824907241E-05"
-        iyz="-3.32610776487244E-13"
-        izz="0.000102469633938426" />
+        ixx="3.01850761095069E-05"
+        ixy="-4.14096974678988E-07"
+        ixz="-1.50995829214283E-12"
+        iyy="9.45981727378192E-05"
+        iyz="7.4107473724615E-14"
+        izz="0.000102469638299712" />
     </inertial>
     <visual>
       <origin
@@ -182,7 +182,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://URDFFPRADITYA/meshes/servolink2.STL" />
+          filename="package://urdffp/meshes/link2.STL" />
       </geometry>
       <material
         name="">
@@ -196,22 +196,22 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://URDFFPRADITYA/meshes/servolink2.STL" />
+          filename="package://urdffp/meshes/link2.STL" />
       </geometry>
     </collision>
   </link>
   <joint
-    name="servo2"
+    name="servolink2"
     type="revolute">
     <origin
-      xyz="0.114034064649251 0.00706014836438754 -0.00176338721238546"
+      xyz="0.116 0.00030718 0"
       rpy="0 0 0" />
     <parent
-      link="servolink1" />
+      link="link1" />
     <child
-      link="servolink2" />
+      link="link2" />
     <axis
-      xyz="0 0 1" />
+      xyz="0 0 -1" />
     <limit
       lower="-3.14"
       upper="3.14"
@@ -219,20 +219,20 @@
       velocity="5.236" />
   </joint>
   <link
-    name="servolink3">
+    name="link3">
     <inertial>
       <origin
-        xyz="0.0620234389184806 -0.0040790777727007 -0.0593197402450246"
+        xyz="0.0628215287302671 -0.0040623495513205 -0.0114412294838502"
         rpy="0 0 0" />
       <mass
-        value="0.0260593092533437" />
+        value="0.0260593092533598" />
       <inertia
-        ixx="9.09683554066077E-06"
-        ixy="-2.36209174396408E-07"
-        ixz="-2.93645570138929E-08"
-        iyy="1.53439259310092E-05"
-        iyz="-1.46574704092211E-07"
-        izz="1.61650308361707E-05" />
+        ixx="9.09683554106757E-06"
+        ixy="-2.36209174504339E-07"
+        ixz="-2.93645570162803E-08"
+        iyy="1.53439259309833E-05"
+        iyz="-1.46574704090451E-07"
+        izz="1.61650308365597E-05" />
     </inertial>
     <visual>
       <origin
@@ -240,7 +240,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://URDFFPRADITYA/meshes/servolink3.STL" />
+          filename="package://urdffp/meshes/link3.STL" />
       </geometry>
       <material
         name="">
@@ -254,20 +254,20 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://URDFFPRADITYA/meshes/servolink3.STL" />
+          filename="package://urdffp/meshes/link3.STL" />
       </geometry>
     </collision>
   </link>
   <joint
-    name="servo3"
+    name="servolink3"
     type="revolute">
     <origin
-      xyz="0.0945742243913521 0.00353263784834318 -0.00146171444441153"
+      xyz="0.094648 0.00060842 0"
       rpy="0 0 0" />
     <parent
-      link="servolink2" />
+      link="link2" />
     <child
-      link="servolink3" />
+      link="link3" />
     <axis
       xyz="0 0 1" />
     <limit
@@ -277,20 +277,20 @@
       velocity="5.236" />
   </joint>
   <link
-    name="servo4">
+    name="linkgear1">
     <inertial>
       <origin
-        xyz="0.0255618399435673 0.00823998018558937 -0.151178771594833"
+        xyz="0.0163906353388061 0.000516730054567798 0.00637440803941411"
         rpy="0 0 0" />
       <mass
-        value="0.00593660537539606" />
+        value="0.00474004808682916" />
       <inertia
-        ixx="7.5418129421024E-07"
-        ixy="-8.73168501496348E-07"
-        ixz="-9.85265988499928E-08"
-        iyy="4.45465648871607E-06"
-        iyz="-3.61806661580129E-08"
-        izz="5.18037390894127E-06" />
+        ixx="2.07881514044574E-07"
+        ixy="4.02451023326036E-08"
+        ixz="7.49281426603522E-08"
+        iyy="2.70247207620343E-06"
+        iyz="2.38664167546256E-09"
+        izz="2.88535011788772E-06" />
     </inertial>
     <visual>
       <origin
@@ -298,7 +298,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://URDFFPRADITYA/meshes/servo4.STL" />
+          filename="package://urdffp/meshes/linkgear1.STL" />
       </geometry>
       <material
         name="">
@@ -312,20 +312,20 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://URDFFPRADITYA/meshes/servo4.STL" />
+          filename="package://urdffp/meshes/linkgear1.STL" />
       </geometry>
     </collision>
   </link>
   <joint
-    name="servo4"
+    name="servogear"
     type="revolute">
     <origin
-      xyz="0.0831288027064685 0.169972417305128 -0.0733785107611967"
-      rpy="-1.5707963267949 0 0" />
+      xyz="0.08705 0.011 -0.0255"
+      rpy="-1.5708 0 0" />
     <parent
-      link="servolink3" />
+      link="link3" />
     <child
-      link="servo4" />
+      link="linkgear1" />
     <axis
       xyz="0 0 1" />
     <limit
@@ -335,20 +335,20 @@
       velocity="10.472" />
   </joint>
   <link
-    name="endpoint1">
+    name="endpointgear">
     <inertial>
       <origin
-        xyz="-0.31034154618055 -0.00126947176024928 0.0182038090132978"
+        xyz="-0.317865599787913 0.000384707865205851 0.0330288180921796"
         rpy="0 0 0" />
       <mass
-        value="0.657387493547971" />
+        value="0.605238076529163" />
       <inertia
-        ixx="0.00181876145870602"
-        ixy="-0.000329203114779509"
-        ixz="0.00133612629704726"
-        iyy="0.00683074207308541"
-        iyz="0.000143324613122407"
-        izz="0.0059950654188618" />
+        ixx="0.00178662577215017"
+        ixy="-0.000338252148447424"
+        ixz="0.00151227607641661"
+        iyy="0.00655019527270797"
+        iyz="0.000207474596412363"
+        izz="0.00569264985514613" />
     </inertial>
     <visual>
       <origin
@@ -356,7 +356,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://URDFFPRADITYA/meshes/endpoint1.STL" />
+          filename="package://urdffp/meshes/endpointgear.STL" />
       </geometry>
       <material
         name="">
@@ -370,7 +370,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://URDFFPRADITYA/meshes/endpoint1.STL" />
+          filename="package://urdffp/meshes/endpointgear.STL" />
       </geometry>
     </collision>
   </link>
@@ -378,30 +378,30 @@
     name="endpoint1"
     type="fixed">
     <origin
-      xyz="0.07851 -0.017246 -0.15499"
+      xyz="0.080522 -0.017346 0"
       rpy="0 0 0" />
     <parent
-      link="servo4" />
+      link="linkgear1" />
     <child
-      link="endpoint1" />
+      link="endpointgear" />
     <axis
       xyz="0 0 0" />
   </joint>
   <link
-    name="servotipu">
+    name="linkgearpalsu">
     <inertial>
       <origin
-        xyz="0.0200681062053951 -0.00760663414439727 -0.152610373161557"
+        xyz="0.0090459102896332 -0.000332822380325673 0.00735793539836838"
         rpy="0 0 0" />
       <mass
-        value="0.00943642630992543" />
+        value="0.00723714741075858" />
       <inertia
-        ixx="1.53010007604928E-06"
-        ixy="1.70333197296685E-06"
-        ixz="1.4818010321321E-07"
-        iyy="6.13769701471646E-06"
-        iyz="-6.65171192606925E-08"
-        izz="7.61772673692282E-06" />
+        ixx="5.26278703132282E-07"
+        ixy="2.71611746965217E-08"
+        ixz="-8.13137293466571E-08"
+        iyy="3.05691434567241E-06"
+        iyz="2.99174191295334E-09"
+        izz="3.5409337967525E-06" />
     </inertial>
     <visual>
       <origin
@@ -409,7 +409,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://URDFFPRADITYA/meshes/servotipu.STL" />
+          filename="package://urdffp/meshes/linkgearpalsu.STL" />
       </geometry>
       <material
         name="">
@@ -423,20 +423,20 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://URDFFPRADITYA/meshes/servotipu.STL" />
+          filename="package://urdffp/meshes/linkgearpalsu.STL" />
       </geometry>
     </collision>
   </link>
   <joint
-    name="servotipu"
+    name="servogearpalsu"
     type="revolute">
     <origin
-      xyz="0.083029 0.16997 -0.043379"
+      xyz="0.08695 0.011 0.0045"
       rpy="-1.5708 0 0" />
     <parent
-      link="servolink3" />
+      link="link3" />
     <child
-      link="servotipu" />
+      link="linkgearpalsu" />
     <axis
       xyz="0 0 1" />
     <limit
@@ -446,20 +446,20 @@
       velocity="10.472" />
   </joint>
   <link
-    name="endpoint2">
+    name="endpointpalsu">
     <inertial>
       <origin
-        xyz="-0.308019406044982 -0.00133156473112015 0.0182038090132977"
+        xyz="-0.317271893020754 -0.00201862954833724 0.0330288180921796"
         rpy="0 0 0" />
       <mass
-        value="0.657387493547972" />
+        value="0.605238076529163" />
       <inertia
-        ixx="0.00181876145870601"
-        ixy="-0.000329203114779437"
-        ixz="0.00133612629704726"
-        iyy="0.00683074207308542"
-        iyz="0.000143324613122388"
-        izz="0.0059950654188618" />
+        ixx="0.00178662577215017"
+        ixy="-0.000338252148447424"
+        ixz="0.00151227607641661"
+        iyy="0.00655019527270797"
+        iyz="0.000207474596412363"
+        izz="0.00569264985514613" />
     </inertial>
     <visual>
       <origin
@@ -467,7 +467,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://URDFFPRADITYA/meshes/endpoint2.STL" />
+          filename="package://urdffp/meshes/endpointpalsu.STL" />
       </geometry>
       <material
         name="">
@@ -481,7 +481,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://URDFFPRADITYA/meshes/endpoint2.STL" />
+          filename="package://urdffp/meshes/endpointpalsu.STL" />
       </geometry>
     </collision>
   </link>
@@ -489,12 +489,12 @@
     name="endpoint2"
     type="fixed">
     <origin
-      xyz="0.0762870841043169 0.0128156153922516 -0.154987060760109"
+      xyz="0.080028 0.015057 0"
       rpy="0 0 0" />
     <parent
-      link="servotipu" />
+      link="linkgearpalsu" />
     <child
-      link="endpoint2" />
+      link="endpointpalsu" />
     <axis
       xyz="0 0 0" />
   </joint>
