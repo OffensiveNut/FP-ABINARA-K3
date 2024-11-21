@@ -1,31 +1,34 @@
+import math
 def interpolatesg(x):
-    # Pastikan sudut berada di dalam range
-    if x < -90.0: x = -90.0
-    elif x > 90.0: x = 90.0
+    # Ensure angle is within range in radians
+    if x < -math.pi / 2:
+        x = -math.pi / 2
+    elif x > math.pi / 2:
+        x = math.pi / 2
     # Angle range [a, b]
-    a = -90
-    b = 90
+    a = -math.pi / 2  # -90 degrees in radians
+    b = math.pi / 2   # 90 degrees in radians
     # Value range [c, d]
     c = 1000
     d = 5000
-    # Persamaan interpolasi linear dari range
+    # Linear interpolation
     y = ((x - a) * (d - c) / (b - a)) + c
-    # Kembalikan nilai sebagai integer
     return int(y)
 
 def interpolatemg(x):
-        # Pastikan sudut berada di dalam range
-    if x < -60.0: x = -60.0
-    elif x > 60.0: x = 60.0
+    # Ensure angle is within range in radians
+    if x < -math.pi / 3:
+        x = -math.pi / 3
+    elif x > math.pi / 3:
+        x = math.pi / 3
     # Angle range [a, b]
-    a = -60
-    b = 60
+    a = -math.pi / 3  # -60 degrees in radians
+    b = math.pi / 3   # 60 degrees in radians
     # Value range [c, d]
     c = 1000
     d = 5000
-    # Persamaan interpolasi linear dari range
+    # Linear interpolation
     y = ((x - a) * (d - c) / (b - a)) + c
-    # Kembalikan nilai sebagai integer
     return int(y)
 # def main():
 #     # # Sudut dalam derajat
