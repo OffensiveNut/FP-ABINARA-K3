@@ -14,12 +14,27 @@ BAUDRATE = 9600
 # Global publisher for dist topic
 dist_pub = None
 
-def send_serial(data_str):
+# Initialize a queue for serial data
+serial_queue = queue.Queue()
+
+def send_serial():
     try:
         with serial.Serial(PORT, BAUDRATE, timeout=1) as ser:
-            ser.write(data_str.encode())
+            rospy.loginfo(f"Connected to serial port: {PORT} at {BAUDRATE} baud.")
+            while not rospy.is_shutdown():
+                try:
+                    # Get data from the queue with a timeout
+                    data_str = serial_queue.get(timeout=1)
+                    ser.write(data_str.encode())
+                    rospy.loginfo(f"Sent over serial: {data_str}")
+                except queue.Empty:
+                    continue
+                except serial.SerialException as e:
+                    rospy.logerr(f"Error sending data: {e}")
+                except Exception as e:
+                    rospy.logerr(f"Unexpected error in send_serial: {e}")
     except serial.SerialException as e:
-        rospy.logerr(f"Error sending data: {e}")
+        rospy.logerr(f"Error opening serial port: {e}")
 
 def receive_serial():
     global dist_pub
@@ -27,16 +42,23 @@ def receive_serial():
         with serial.Serial(PORT, BAUDRATE, timeout=1) as ser:
             rospy.loginfo(f"Listening on {PORT} at {BAUDRATE} baud...")
             while not rospy.is_shutdown():
-                if ser.in_waiting > 0:
-                    data = ser.readline().decode('utf-8').strip()
-                    rospy.loginfo(f"Data received: {data}")
-                    try:
-                        dist_msg = Int32(int(data))
-                        dist_pub.publish(dist_msg)
-                    except ValueError as e:
-                        rospy.logerr(f"Error converting data: {e}")
+                try:
+                    if ser.in_waiting > 0:
+                        data = ser.readline().decode('utf-8').strip()
+                        rospy.loginfo(f"Data received: {data}")
+                        try:
+                            # Directly convert the received data to an integer
+                            dist_value = int(data)
+                            dist_msg = Int32(data=dist_value)
+                            dist_pub.publish(dist_msg)
+                        except ValueError as e:
+                            rospy.logerr(f"Error converting data: {e}")
+                except serial.SerialException as e:
+                    rospy.logerr(f"Serial read error: {e}")
+                except Exception as e:
+                    rospy.logerr(f"Unexpected error in receive_serial: {e}")
     except serial.SerialException as e:
-        rospy.logerr(f"Error receiving data: {e}")
+        rospy.logerr(f"Error opening serial port: {e}")
 
 def send_dummy_dist():
     global dist_pub
@@ -56,7 +78,9 @@ def callback(data):
     rospy.loginfo(f'Sudut: {angles}')
     rospy.loginfo(f'Nilai: {digital_units}')
     formatted_units = ' '.join(f'{value:04d}' for value in digital_units)
-    send_serial(formatted_units)
+    
+    # Enqueue the formatted string for sending over serial
+    serial_queue.put(formatted_units)
 
 def main():
     global dist_pub
@@ -74,11 +98,16 @@ def main():
     receive_thread = threading.Thread(target=receive_serial, daemon=True)
     receive_thread.start()
     
-    send_dist_thread = threading.Thread(target=send_serial, daemon=True)
-    send_dist_thread.start()
+    # Start a background thread to send serial data
+    send_thread = threading.Thread(target=send_serial, daemon=True)
+    send_thread.start()
 
     # Spin to keep the node running and processing messages
     rospy.spin()
+
+    # Ensure threads are properly joined before exiting
+    receive_thread.join()
+    send_thread.join()
 
 if __name__ == '__main__':
     # Start the main function
