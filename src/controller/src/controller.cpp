@@ -37,13 +37,13 @@ class RobotArm
 private:
     std::mutex dist_mutex;
     double current_distance;
-    int count = 0;
 
 public:
     // in mm
     const double L1 = 120.0;
     const double L2 = 100.00;
     const double L3 = 140.5;
+    int count = 0;
 
     RobotArm() : current_distance(0.0) {}
 
@@ -97,11 +97,40 @@ public:
 
         return {theta1, theta2, theta3};
     }
+    void restart(ros::Publisher &joint_pub, double claw, vector<double> angles)
+    {
+        constexpr double rad90 = M_PI / 2.0;
+        constexpr double TRANSITION_DURATION = 3.0;                          // 2 seconds
+        constexpr int TRANSITION_STEPS = 50;                                 // Number of steps for transition
+        constexpr double STEP_TIME = TRANSITION_DURATION / TRANSITION_STEPS; // Time per step
+
+        const vector<double> target_angles = {0.0, 0.0, 0.0};
+        // Current distance (assuming it remains constant)
+        double current_dist = getDistance();
+        double target_base = -rad90;
+
+        // Transition loop
+        vector<double> next_angles = angles;
+        for (int step = 1; step <= TRANSITION_STEPS; ++step)
+        {
+            double ratio = static_cast<double>(step) / TRANSITION_STEPS;
+            vector<double> next_angles = {angles[0] + ratio * (target_angles[0] - angles[0]), angles[1] + ratio * (target_angles[1] - angles[1]), angles[2] + ratio * (target_angles[2] - angles[2])};
+
+            // Publish the joint states
+            publishJointStates(joint_pub, claw, next_angles, target_base, current_dist);
+
+            // Sleep for the step duration
+            ros::Duration(STEP_TIME).sleep();
+            ros::spinOnce();
+        }
+        ROS_INFO("back to the start.");
+        return;
+    }
     void putDown(ros::Publisher &joint_pub, vector<double> angles, double scan_angle)
     {
         constexpr double rad90 = M_PI / 2.0;
         constexpr double TRANSITION_DURATION = 2.0;                          // 2 seconds
-        constexpr int TRANSITION_STEPS = 30;                                 // Number of steps for transition
+        constexpr int TRANSITION_STEPS = 60;                                 // Number of steps for transition
         constexpr double STEP_TIME = TRANSITION_DURATION / TRANSITION_STEPS; // Time per step
         vector<double> target_angles = {0.0, 0.0, 0.0};
         if (count == 0)
@@ -110,11 +139,11 @@ public:
         }
         else if (count == 1)
         {
-            target_angles = {0.6108652, 1.134464, -1.047198};
+            target_angles = {0.523599, 1.099557, -1.134464};
         }
         else if (count == 2)
         {
-            target_angles = {0.4014257, 1.22173, -rad90 / 2};
+            target_angles = {0.488692, 1.22173, -0.872665};
         }
         // Current distance (assuming it remains constant)
         double current_dist = getDistance();
@@ -133,16 +162,75 @@ public:
             ros::Duration(STEP_TIME).sleep();
             ros::spinOnce();
         }
-        vector <double> starting_angle= {0.0, 0.0, 0.0};
-        ROS_INFO("things get down");
-        bringUp(joint_pub, rad90, starting_angles, scan_angle);
-        count++;
+        double currClaw = rad90 / 6;
+        for (int step = 1; step <= TRANSITION_STEPS; ++step)
+        {
+            double ratio = static_cast<double>(step) / TRANSITION_STEPS;
+            double next_claw = currClaw + ratio * (rad90 - currClaw);
+            // Linearly interpolate the capit_rad value
+
+            // Publish the joint states
+            publishJointStates(joint_pub, next_claw, target_angles, scan_angle, current_dist);
+
+            // Sleep for the step duration
+            ros::Duration(STEP_TIME).sleep();
+            ros::spinOnce();
+        }
+        if (count == 0)
+        {
+            count++;
+            ROS_INFO("things got down : %d", count);
+            restart(joint_pub, rad90, target_angles);
+            return;
+        }
+        else if (count == 1)
+        {
+            angles = target_angles;
+            target_angles = {0.733038, 1.099557, -1.308997};
+        }
+        else if (count == 2)
+        {
+            angles = target_angles;
+            target_angles = {0.523599, 1.221730, -0.959931};
+        }
+        for (int step = 1; step <= TRANSITION_STEPS; ++step)
+        {
+            double ratio = static_cast<double>(step) / TRANSITION_STEPS;
+            vector<double> next_angles = {angles[0] + ratio * (target_angles[0] - angles[0]), angles[1] + ratio * (target_angles[1] - angles[1]), angles[2] + ratio * (target_angles[2] - angles[2])};
+            // Linearly interpolate the capit_rad value
+
+            // Publish the joint states
+            publishJointStates(joint_pub, rad90, next_angles, scan_angle, getDistance());
+
+            // Sleep for the step duration
+            ros::Duration(STEP_TIME).sleep();
+            ros::spinOnce();
+        }
+            ros::Duration(1).sleep();
+
+        if (getDistance() <= 10)
+        {
+            count++;
+            ROS_INFO("things got down : %d", count);
+            if (count == 3)
+            {
+                ROS_INFO("Mission Complete.");
+                return;
+            }
+            restart(joint_pub, rad90, target_angles);
+            return;
+        }
+        else
+        {
+            restart(joint_pub, rad90, target_angles);
+            return;
+        }
     }
     void bringUp(ros::Publisher &joint_pub, double claw, vector<double> angles, double scan_angle)
     {
         constexpr double rad90 = M_PI / 2.0;
         constexpr double TRANSITION_DURATION = 3.0;                          // 2 seconds
-        constexpr int TRANSITION_STEPS = 30;                                 // Number of steps for transition
+        constexpr int TRANSITION_STEPS = 80;                                 // Number of steps for transition
         constexpr double STEP_TIME = TRANSITION_DURATION / TRANSITION_STEPS; // Time per step
 
         const vector<double> target_angles = {0.0, 0.0, 0.0};
@@ -180,21 +268,22 @@ public:
         }
 
         ROS_INFO("thing got lifted.");
-        putDown(joint_pub,target_angles,target_base);
+        putDown(joint_pub, target_angles, target_base);
+        return;
     }
     void closeGripper(ros::Publisher &joint_pub, vector<double> angles, double scan_angle)
     {
         // Constants
         constexpr double rad90 = M_PI / 2.0;
         constexpr double TRANSITION_DURATION = 1.0;                          // 2 seconds
-        constexpr int TRANSITION_STEPS = 20;                                 // Number of steps for transition
+        constexpr int TRANSITION_STEPS = 70;                                 // Number of steps for transition
         constexpr double STEP_TIME = TRANSITION_DURATION / TRANSITION_STEPS; // Time per step
 
         // Initial and target angles
         double initial_capit = rad90;    // 90 degrees in radians
-        double target_capit = rad90 / 6; // 0 degrees in radians
+        double target_capit = 0.349066; // 0 degrees in radians
 
-        const vector<double> target_angles = {rad90 / 2 - (rad90 / 20), rad90 / 2, angles[2]};
+        const vector<double> target_angles = {0.4363323, 0.6308652, angles[2]};
         // Current distance (assuming it remains constant)
         double current_dist = getDistance();
         vector<double> next_angles = angles;
@@ -226,27 +315,33 @@ public:
         constexpr double rad90 = M_PI / 2.0;
         constexpr double rad60 = M_PI / 3.0;
         constexpr double THRESHOLD_DIST = 20.0;                              // 200mm (20cm)
-        constexpr double TRANSITION_DURATION = 2.0;                          // 2 seconds
-        constexpr int TRANSITION_STEPS = 20;                                 // Number of steps for transition
+        constexpr double TRANSITION_DURATION = 4.0;                          // 2 seconds
+        constexpr int TRANSITION_STEPS = 50;                                 // Number of steps for transition
         constexpr double STEP_TIME = TRANSITION_DURATION / TRANSITION_STEPS; // Time per step
 
         // Target initial angles (capit, wrist, elbow, shoulder, base)
         double target_capit = rad90;                // 0 degrees in radians
-        double target_wrist = rad90 - (rad90 / 20); // 90 degrees in radians
+        double target_wrist = 1.448623;             // 90 degrees in radians
         double target_elbow = rad90;                // 90 degrees in radians
         double target_shoulder = -rad90;            // -90 degrees in radians
         double target_base = -1.4;                  // -80 degrees in radians
 
         // Initial angles (starting from 0)
-        double current_capit = 0.0;
+        // double current_capit = rad90;
         double current_wrist = 0.0;
         double current_elbow = 0.0;
         double current_shoulder = 0.0;
-        double current_base = 0.0;
+        double current_base = -1.4;
+
+        double initial_wrist = 0.0;
+        double initial_elbow = 0.0;
+        double initial_shoulder = 0.0;
+        double initial_base = -1.4;
 
         // Publish initial zero state
         std::vector<double> zero_angles = {current_wrist, current_elbow, current_shoulder};
-        publishJointStates(joint_pub, current_capit, zero_angles, current_base, getDistance());
+        publishJointStates(joint_pub, target_capit, zero_angles, current_base, getDistance());
+        double current_dist = getDistance()+20;
 
         // Transition from 0 to target angles over TRANSITION_DURATION seconds
         for (int step = 1; step <= TRANSITION_STEPS; ++step)
@@ -254,17 +349,17 @@ public:
             double ratio = static_cast<double>(step) / TRANSITION_STEPS;
 
             // Linearly interpolate each joint angle
-            current_capit = 0.0 + ratio * (target_capit - 0.0); // Remains 0
-            current_wrist = 0.0 + ratio * (target_wrist - 0.0);
-            current_elbow = 0.0 + ratio * (target_elbow - 0.0);
-            current_shoulder = 0.0 + ratio * (target_shoulder - 0.0);
-            current_base = 0.0 + ratio * (target_base - 0.0); // Remains 0
+            // current_capit = 0.0 + ratio * (target_capit - 0.0); // Remains 0
+            current_wrist = initial_wrist + ratio * (target_wrist - initial_wrist);
+            current_elbow = initial_elbow + ratio * (target_elbow - initial_elbow);
+            current_shoulder = initial_shoulder + ratio * (target_shoulder - initial_shoulder);
+            current_base = initial_base + ratio * (target_base - initial_base); // Remains 0
 
             // Create ik_result vector for wrist, elbow, shoulder
             std::vector<double> ik_result = {current_wrist, current_elbow, current_shoulder};
 
             // Publish the interpolated joint states
-            publishJointStates(joint_pub, current_capit, ik_result, current_base, getDistance());
+            publishJointStates(joint_pub, target_capit, ik_result, current_base, current_dist);
 
             // Sleep for the step duration
             ros::Duration(STEP_TIME).sleep();
@@ -274,8 +369,8 @@ public:
         ROS_INFO("Transition to initial scanning position completed.");
 
         // Scanning angle for servopiringan (first joint)
-        double scan_angle = -1.4;      // Start from -90°
-        constexpr double STEP = 0.005; // Small increment for smooth motion
+        double scan_angle = -1.3;     // Start from -90°
+        constexpr double STEP = 0.007; // Small increment for smooth motion
         bool direction = true;         // true = right, false = left
 
         while (!isFound && ros::ok())
@@ -289,9 +384,9 @@ public:
                 scan_angle = rad90;
                 direction = false;
             }
-            else if (scan_angle <= -1.4)
+            else if (scan_angle <= -1.3)
             {
-                scan_angle = -1.4;
+                scan_angle = -1.3;
                 direction = true;
             }
 
@@ -304,6 +399,8 @@ public:
             {
                 isFound = true;
                 ROS_INFO("Object found at angle: %f degrees", scan_angle * 180.0 / M_PI);
+                ros::Duration(1).sleep();
+
                 break;
             }
 
@@ -344,7 +441,7 @@ int main(int argc, char **argv)
     spinner.start();
 
     ros::Rate loop_rate(10);
-    while (ros::ok() && count <3)
+    while (ros::ok() && robotArm.count < 3)
     {
         //===========================debug================
         // Vector to store joint angles in degrees
@@ -367,7 +464,8 @@ int main(int argc, char **argv)
         // std::vector<double> ik_result = {joint1_rad, joint2_rad, joint3_rad};
 
         // // Access distance data when needed
-        // current_dist = robotArm.getDistance(); /* your method to get distance, e.g., robotArm.getDistance() */;
+        // current_dist = robotArm.getDistance(); /* your method to get distance, e.g., robotArm.getDistance() */
+        // ;
 
         // // Publish joint states with converted radian values
         // publishJointStates(joint_pub, capit_rad, ik_result, base_rad, current_dist);
@@ -391,8 +489,11 @@ int main(int argc, char **argv)
         // publishJointStates(joint_pub,base, ik_result,capit, current_dist);
 
         robotArm.scan(joint_pub);
-
+        // robotArm.scan(joint_pub);
+        // robotArm.scan(joint_pub);
+        // ROS_INFO("Mission Complete.");
         // loop_rate.sleep();
+        ros::Duration(1).sleep();
     }
     return 0;
 };
